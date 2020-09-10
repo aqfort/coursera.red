@@ -3,9 +3,52 @@
 
 #include <algorithm>
 #include <numeric>
+#include <tuple>
+#include <iomanip>
+
 using namespace std;
 
-#define SORT_BY(field)  // Реализуйте этот макрос, а также необходимые операторы для классов Date и Time
+bool operator<(const Date& lhs, const Date& rhs) {
+  return make_tuple(lhs.year, lhs.month, lhs.day) < make_tuple(rhs.year, rhs.month, rhs.day);
+}
+
+bool operator<(const Time& lhs, const Time& rhs) {
+  return make_tuple(lhs.hours, lhs.minutes) < make_tuple(rhs.hours, rhs.minutes);
+}
+
+ostream& operator<<(ostream& stream, const Date& date) {
+  stream << setfill('0') << setw(4) << date.year << '-'
+    << setfill('0') << setw(2) << date.month << '-'
+    << setfill('0') << setw(2) << date.day;
+  return stream;
+}
+
+ostream& operator<<(ostream& stream, const Time& time) {
+  stream << setfill('0') << setw(2) << time.hours << ':'
+    << setfill('0') << setw(2) << time.minutes;
+  return stream;
+}
+
+bool operator!=(const Date &lhs, const Date &rhs) {
+  return make_tuple(lhs.year, lhs.month, lhs.day) != make_tuple(rhs.year, rhs.month, rhs.day);
+}
+
+bool operator!=(const Time& lhs, const Time& rhs) {
+  return make_tuple(lhs.hours, lhs.minutes) != make_tuple(rhs.hours, rhs.minutes);
+}
+
+bool operator==(const Date &lhs, const Date &rhs) {
+  return make_tuple(lhs.year, lhs.month, lhs.day) == make_tuple(rhs.year, rhs.month, rhs.day);
+}
+
+bool operator==(const Time& lhs, const Time& rhs) {
+  return make_tuple(lhs.hours, lhs.minutes) == make_tuple(rhs.hours, rhs.minutes);
+}
+
+#define SORT_BY(field)                                    \
+[](const AirlineTicket& lhs, const AirlineTicket& rhs) {  \
+  return lhs.field < rhs.field;                           \
+}                                                         
 
 void TestSortBy() {
   vector<AirlineTicket> tixs = {
