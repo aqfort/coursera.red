@@ -48,7 +48,7 @@ bool operator==(const Time& lhs, const Time& rhs) {
 #define SORT_BY(field)                                    \
 [](const AirlineTicket& lhs, const AirlineTicket& rhs) {  \
   return lhs.field < rhs.field;                           \
-}                                                         
+}
 
 void TestSortBy() {
   vector<AirlineTicket> tixs = {
